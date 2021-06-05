@@ -1,6 +1,6 @@
 import argparse
 
-def create_parser():
+def create_parser() -> argparse.ArgumentParser:
 
     parser = argparse.ArgumentParser(
         prog='cheque',
@@ -14,8 +14,8 @@ def create_parser():
     )
 
     parser.add_argument(
-        '-C',
-        '--all-upper',
+        '-U',
+        '--upper',
         action='store_true',
         help='output words in all uppercase'
     )
