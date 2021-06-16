@@ -12,26 +12,52 @@ def _rm_empty_dict_items(dict_):
             new_dict[key] = dict_[key]
     return new_dict
 
-def tokenize(amount):
+def _rm_leading_zeros(amount):
+    try:
+        amount = str('{:.2f}'.format(float(amount)))
+        return amount
+    except ValueError:
+        pass
+
+#TODO: Add function to remove leading zeros (completed)
+#TODO: Add tests for leading zeros cases
+#TODO: Add support for decimals (completed)
+#TODO: Add tests for decimal cases
+
+def _tokenize_integer_part(integer):
     tokens = {}
-    amount = str(amount).replace(',', '')
-    amount = list(amount)
-    num_of_num_names = len(amount) // 3 + 1
-    leading_separater = len(amount) % 3
+    integer = str(integer).replace(',', '')
+    integer = list(integer)
+    num_of_num_names = len(integer) // 3 + 1
+    leading_separater = len(integer) % 3
     num_names = NUM_NAME[:num_of_num_names]
 
-    if len(amount) <= 3:
-        tokens[num_names[0]] = ''.join(amount)
+    if len(integer) <= 3:
+        tokens[num_names[0]] = ''.join(integer)
     else:
-        tokens[num_names[-1]] = ''.join(amount[:leading_separater])
-        amount = _rm_leading_items(amount, leading_separater)
+        tokens[num_names[-1]] = ''.join(integer[:leading_separater])
+        integer = _rm_leading_items(integer, leading_separater)
 
         starting_num_name = 2
-        while len(amount) > 0:
-            tokens[num_names[-starting_num_name]] = ''.join(amount[:3])
-            amount = _rm_leading_items(amount, 3)
+        while len(integer) > 0:
+            tokens[num_names[-starting_num_name]] = ''.join(integer[:3])
+            integer = _rm_leading_items(integer, 3)
             starting_num_name += 1
 
-    output_tokens = _rm_empty_dict_items(tokens)
+    integer_tokens = _rm_empty_dict_items(tokens)
 
-    return output_tokens
+    return integer_tokens
+
+def _tokenize_decimal_part(decimal):
+    decimal_tokens = {'Decimal': decimal}
+    return decimal_tokens
+
+def tokenize_amount(amount):
+    amount = _rm_leading_zeros(amount)
+    integer_and_decimal = amount.split('.')
+    integer = integer_and_decimal[0]
+    decimal = integer_and_decimal[1]
+    integer_tokens = _tokenize_integer_part(integer)
+    decimal_tokens = _tokenize_decimal_part(decimal)
+    tokens = integer_tokens | decimal_tokens
+    return tokens
