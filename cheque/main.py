@@ -1,5 +1,6 @@
 from .cli import create_parser
 
+
 def main() -> int:
     exit_code = 0
     parser = create_parser()
