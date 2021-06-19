@@ -1,4 +1,4 @@
-NUM_NAME = ['Only', 'Thousand', 'Million', 'Billion', 'Trillion']
+NUM_NAME = ['Dollars', 'Thousand', 'Million', 'Billion', 'Trillion']
 
 HUNDRED = 'Hundred'
 
