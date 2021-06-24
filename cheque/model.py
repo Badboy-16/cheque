@@ -105,3 +105,8 @@ def translate_full_amount(full_amount: str) -> str:
         full_words = f'{integer_part_words}And {cents_part_words}Only'
 
     return full_words
+
+
+def print_full_words(full_words: str) -> int:
+    print(full_words)
+    return 0

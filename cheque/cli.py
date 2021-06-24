@@ -10,7 +10,7 @@ def create_parser() -> argparse.ArgumentParser:
 
     parser.add_argument(
         'amount',
-        nargs='*',
+        action='store',
         help='amounts to be converted to words'
     )
 
