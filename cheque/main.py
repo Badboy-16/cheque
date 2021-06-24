@@ -8,6 +8,8 @@ def main() -> int:
     parser = create_parser()
     args = parser.parse_args()
     amount_in_words = translate_full_amount(args.amount)
+    if args.upper:
+        amount_in_words = amount_in_words.upper()
     exit_code = print_full_words(amount_in_words)
     return exit_code
 
