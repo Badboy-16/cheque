@@ -1,5 +1,6 @@
 import unittest
 from cheque.model import tokenize
+from cheque.model import translate_three_digits
 
 
 class TestTokenizeAmount(unittest.TestCase):
@@ -46,6 +47,17 @@ class TestTokenizeAmount(unittest.TestCase):
         self.assertEqual(tokenize('1234567.89'), {
                          'Million': '1', 'Thousand': '234', 'Dollars': '567',
                          'Cents': '89'})
+
+
+class TestTranslateAmount(unittest.TestCase):
+    def test_translate(self):
+        self.assertEqual(translate_three_digits('123'),
+                         'One Hundred And Twenty Three')
+        self.assertEqual(translate_three_digits(
+            '404'), 'Four Hundred And Four')
+        self.assertEqual(translate_three_digits(
+            '520'), 'Five Hundred And Twenty')
+        self.assertEqual(translate_three_digits('300'), 'Three Hundred')
 
 
 if __name__ == '__main__':
