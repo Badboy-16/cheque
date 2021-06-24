@@ -62,3 +62,46 @@ def translate_two_digits(two_digits: str) -> str:
 
 def translate_one_digit(one_digit: str) -> str:
     return ONE_DIGIT[int(one_digit)]
+
+
+def translate_digits(digits: str) -> str:
+    digits = str(int(digits))
+    if len(digits) == 3:
+        return translate_three_digits(digits)
+    elif len(digits) == 2:
+        return translate_two_digits(digits)
+    elif len(digits) == 1:
+        return translate_one_digit(digits)
+
+
+def translate_full_amount(full_amount: str) -> str:
+    tokens = tokenize(full_amount)
+
+    tokens_with_rm_zero = {}
+    for key in tokens:
+        if int(tokens[key]) != 0:
+            tokens_with_rm_zero[key] = tokens[key]
+
+    tokens_words = {}
+    for key, value in tokens_with_rm_zero.items():
+        tokens_words[key] = translate_digits(tokens_with_rm_zero[key])
+
+    integer_part_words = ""
+    cents_part_words = ""
+
+    if len(tokens_words) == 1 and 'Cents' in tokens_words.keys():
+        cents_part_words = f'{tokens_words[0]} Cents Only'
+        return cents_part_words
+    else:
+        for key, value in tokens_words.items():
+            if key != 'Cents':
+                integer_part_words += f'{value} {key} '
+            else:
+                cents_part_words += f'{value} {key} '
+
+    if len(cents_part_words) == 0:
+        full_words = f'{integer_part_words}Only'
+    else:
+        full_words = f'{integer_part_words}And {cents_part_words}Only'
+
+    return full_words
