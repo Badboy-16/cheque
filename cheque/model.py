@@ -92,12 +92,11 @@ def translate_full_amount(full_amount: str) -> str:
     if len(tokens_words) == 1 and 'Cents' in tokens_words.keys():
         cents_part_words = f'{tokens_words["Cents"]} Cents Only'
         return cents_part_words
-    else:
-        for key, value in tokens_words.items():
-            if key != 'Cents':
-                integer_part_words += f'{value} {key} '
-            else:
-                cents_part_words += f'{value} {key} '
+    for key, value in tokens_words.items():
+        if key != 'Cents':
+            integer_part_words += f'{value} {key} '
+        else:
+            cents_part_words += f'{value} {key} '
 
     if len(cents_part_words) == 0:
         full_words = f'{integer_part_words}Only'
